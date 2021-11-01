@@ -4,7 +4,8 @@
   "description": "Yet another TodoList app",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
+    "build": "tsc",
+    "start": "node build/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,8 @@
   "homepage": "https://github.com/jbuget/todolist#readme",
   "engines": {
     "node": ">=14.18.1 || >=16.13.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.4"
   }
 }
