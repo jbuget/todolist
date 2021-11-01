@@ -1,0 +1,27 @@
+{
+  "name": "todolist",
+  "version": "0.0.1",
+  "description": "Yet another TodoList app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbuget/todolist.git"
+  },
+  "keywords": [
+    "Node.js",
+    "API"
+  ],
+  "author": "Jérémy Buget <contact@jbuget.fr>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jbuget/todolist/issues"
+  },
+  "homepage": "https://github.com/jbuget/todolist#readme",
+  "engines": {
+    "node": ">=14.18.1 || >=16.13.0"
+  }
+}
