@@ -5,7 +5,7 @@ const logger = buildLogger();
 
 const server = buildApp(logger);
 
-server.listen(3000, (err) => {
+server.listen(8080, (err) => {
   if (err) {
     console.error(err);
     process.exit(1);
