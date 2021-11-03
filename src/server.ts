@@ -1,6 +1,9 @@
-import { build as app } from './app';
+import { build as buildApp } from './app';
+import { build as buildLogger } from './logger';
 
-const server = app();
+const logger = buildLogger();
+
+const server = buildApp(logger);
 
 server.listen(3000, (err) => {
   if (err) {
