@@ -5,7 +5,9 @@ const logger = buildLogger();
 
 const server = buildApp(logger);
 
-server.listen(8080, (err) => {
+const port = process.env.PORT || 3000;
+
+server.listen(port, (err) => {
   if (err) {
     console.error(err);
     process.exit(1);
