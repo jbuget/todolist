@@ -1,10 +1,10 @@
 import fastify, { FastifyInstance } from 'fastify';
+import { P } from 'pino';
 
-function build (): FastifyInstance {
+function build(logger?: P.Logger): FastifyInstance {
+
   const server = fastify({
-    logger: {
-      prettyPrint: true
-    }
+    logger
   });
 
   server.get('/ping', async () => {
