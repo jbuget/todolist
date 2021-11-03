@@ -17,6 +17,11 @@ module.exports = {
     'jest'
   ],
   rules: {
-    semi: [2, 'always']
+    semi: [2, 'always'],
+    'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'never',
+      asyncArrow: 'always'
+    }]
   }
 };
