@@ -10,7 +10,7 @@ const host = process.env.HOST || 'localhost';
 
 server.listen(port, host, (err) => {
   if (err) {
-    console.error(err);
+    logger.error(err);
     process.exit(1);
   }
 });
