@@ -6,10 +6,7 @@ const logger = buildLogger();
 
 const server = buildApp(logger);
 
-const port = environment.server.port;
-const host = environment.server.host;
-
-server.listen(port, host, (err) => {
+server.listen(environment.server.port, environment.server.host, (err) => {
   if (err) {
     logger.error(err);
     process.exit(1);
