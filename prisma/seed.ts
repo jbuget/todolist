@@ -3,21 +3,27 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.todo.create({
-    data: {
+  await prisma.todo.upsert({
+    where: { id: 1 },
+    update: {
+      status: 'DONE'
+    },
+    create: {
       id: 1,
       content: 'Todo 1 content'
     }
   });
-  await prisma.todo.create({
-    data: {
-      id: 2,
+  await prisma.todo.upsert({
+    where: { id: 2 },
+    update: {},
+    create: {
       content: 'Todo 2 content'
     }
   });
-  await prisma.todo.create({
-    data: {
-      id: 3,
+  await prisma.todo.upsert({
+    where: { id: 3 },
+    update: {},
+    create: {
       content: 'Todo 3 content'
     }
   });
@@ -26,7 +32,7 @@ async function main() {
 
   await prisma.todo.create({
     data: {
-      content: 'Todo 3 content'
+      content: 'Todo 4 content'
     }
   });
 }
