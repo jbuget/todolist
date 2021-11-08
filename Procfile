@@ -1,2 +1,2 @@
-postdeploy: npx prisma migrate deploy && npx prisma db seed
+postdeploy: npx prisma migrate deploy
 web: exec node build/server
