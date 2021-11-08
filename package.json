@@ -11,6 +11,9 @@
     "pretest": "npm run build",
     "test": "jest"
   },
+  "prisma": {
+    "seed": "node --loader ts-node/esm ./prisma/seed.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jbuget/todolist.git"
@@ -43,6 +46,7 @@
     "jest": "^27.3.1",
     "prisma": "^3.4.1",
     "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
   "dependencies": {
