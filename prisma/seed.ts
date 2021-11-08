@@ -5,18 +5,18 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.todo.upsert({
     where: { id: 1 },
-    update: {
-      status: 'DONE'
-    },
+    update: {},
     create: {
       id: 1,
-      content: 'Todo 1 content'
+      content: 'Todo 1 content',
+      status: 'DONE'
     }
   });
   await prisma.todo.upsert({
     where: { id: 2 },
     update: {},
     create: {
+      id: 2,
       content: 'Todo 2 content'
     }
   });
@@ -24,17 +24,12 @@ async function main() {
     where: { id: 3 },
     update: {},
     create: {
+      id: 3,
       content: 'Todo 3 content'
     }
   });
 
-  await prisma.$queryRaw`SELECT setval('"Todo_id_seq"', 3);`;
-
-  await prisma.todo.create({
-    data: {
-      content: 'Todo 4 content'
-    }
-  });
+  await prisma.$queryRaw`SELECT setval('"Todo_id_seq"', (SELECT MAX(id) FROM "Todo"));`;
 }
 
 main()
