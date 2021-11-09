@@ -3,9 +3,29 @@ name: Node.js CI
 on: push
 
 jobs:
+  # Label of the container job
   build:
-
+    # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
+
+    # Service containers to run with `build`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        env:
+          # Provide the password for postgres
+          POSTGRES_PASSWORD: example
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
 
     steps:
       - uses: actions/checkout@v2
@@ -15,6 +35,9 @@ jobs:
           cache: 'npm'
       - run: npm install
       - run: npm run lint
-      - run: npm test
+      - run: npm run db:reset
+        env:
+          DATABASE_URL: postgres://postgres:example@localhost:5432/todolist
+      - run: npm run test
         env:
           DATABASE_URL: postgres://postgres:example@localhost:5432/todolist
