@@ -9,7 +9,9 @@ async function main() {
     create: {
       id: 1,
       content: 'Todo 1 content',
-      status: 'DONE'
+      status: 'DONE',
+      createdAt: new Date('2021-11-09T17:08:02.865Z'),
+      updatedAt: new Date('2021-11-09T17:08:02.866Z')
     }
   });
   await prisma.todo.upsert({
@@ -17,7 +19,9 @@ async function main() {
     update: {},
     create: {
       id: 2,
-      content: 'Todo 2 content'
+      content: 'Todo 2 content',
+      createdAt: new Date('2021-11-09T17:08:02.927Z'),
+      updatedAt: new Date('2021-11-09T17:08:02.928Z')
     }
   });
   await prisma.todo.upsert({
@@ -25,7 +29,9 @@ async function main() {
     update: {},
     create: {
       id: 3,
-      content: 'Todo 3 content'
+      content: 'Todo 3 content',
+      createdAt: new Date('2021-11-09T17:08:02.969Z'),
+      updatedAt: new Date('2021-11-09T17:08:02.970Z')
     }
   });
 
