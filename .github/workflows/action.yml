@@ -27,6 +27,10 @@ jobs:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
 
+    # Set custom environment variables for all steps
+    env:
+      DATABASE_URL: postgres://postgres:example@localhost:5432/todolist
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -36,8 +40,4 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run db:reset
-        env:
-          DATABASE_URL: postgres://postgres:example@localhost:5432/todolist
       - run: npm run test
-        env:
-          DATABASE_URL: postgres://postgres:example@localhost:5432/todolist
