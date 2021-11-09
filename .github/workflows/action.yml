@@ -4,7 +4,7 @@ on: push
 
 jobs:
   # Label of the container job
-  build:
+  lint-and-test:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
