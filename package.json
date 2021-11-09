@@ -2,15 +2,17 @@
   "name": "todolist",
   "version": "0.0.1",
   "description": "Yet another TodoList app",
-  "main": "build/server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "db:reset": "prisma migrate reset",
+    "build": "tsc -p tsconfig.dist.json",
+    "build:dev": "tsc -p tsconfig.json",
+    "db:reset": "prisma migrate reset --force",
     "db:seed": "prisma db seed",
     "lint": "eslint --ext .ts src/** test/**",
+    "dev": "npm run build:dev && node build/src/server",
     "prestart": "npm run build",
-    "start": "node build/server",
-    "pretest": "npm run build",
+    "start": "node dist/server",
+    "pretest": "npm run build:dev",
     "test": "jest"
   },
   "prisma": {
