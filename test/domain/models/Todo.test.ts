@@ -1,4 +1,4 @@
-import { Status, Todo } from '../../../src/domain/models/Todo';
+import { Status, Todo } from '../../../src/domain/entities/Todo';
 
 describe('domain.models.Todo', function () {
   describe('Constructor', function () {

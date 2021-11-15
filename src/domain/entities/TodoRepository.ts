@@ -1,4 +1,4 @@
-import { TodoList } from '../models/TodoList';
+import { TodoList } from './TodoList';
 
 export interface TodoRepository {
   findAll(): TodoList
