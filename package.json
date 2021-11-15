@@ -4,6 +4,7 @@
   "description": "Yet another TodoList app",
   "main": "dist/server.js",
   "scripts": {
+    "configure": "./scripts/configure.sh",
     "build": "tsc -p tsconfig.dist.json",
     "build:dev": "tsc -p tsconfig.json",
     "db:reset": "prisma migrate reset --force",
