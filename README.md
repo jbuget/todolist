@@ -52,13 +52,7 @@ Les versions indiquées sont celles utilisées dans le cadre du développement d
 ```
 git clone git@github.com:jbuget/todolist.git
 cd todolist
-cp sample.env .env
-docker compose up -d
-npm install
-npm run db:reset
-npm lint
-npm test
-npm start
+npm run configure
 ```
 
 > ⚠️ Si la commande `docker compose up -d` ne fonctionne pas (car ancienne version de Docker ou version pour Linux), essayer la commande `docker-compose up -d` 
