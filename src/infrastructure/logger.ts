@@ -1,5 +1,5 @@
 import pino, { P } from 'pino';
-import { environment } from './environment';
+import { environment } from '../environment';
 
 function build(): P.Logger {
   return pino({
