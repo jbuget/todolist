@@ -1,6 +1,6 @@
 import { environment } from './environment';
-import { build as buildApp } from './app';
-import { build as buildLogger } from './logger';
+import { build as buildApp } from './infrastructure/app';
+import { build as buildLogger } from './infrastructure/logger';
 
 const logger = buildLogger();
 

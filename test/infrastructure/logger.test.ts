@@ -1,5 +1,5 @@
 import { P } from 'pino';
-import { build } from '../src/logger';
+import { build } from '../../src/infrastructure/logger';
 
 describe('logger', () => {
   it('should be an instance of P.Logger', () => {

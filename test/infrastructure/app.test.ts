@@ -1,4 +1,4 @@
-import { build as app } from '../src/app';
+import { build as app } from '../../src/infrastructure/app';
 
 describe('API', () => {
   describe('GET /ping', () => {
