@@ -1,5 +1,5 @@
-import { Todo } from '../../../src/domain/models/Todo';
-import { TodoList } from '../../../src/domain/models/TodoList';
+import { Todo } from '../../../src/domain/entities/Todo';
+import { TodoList } from '../../../src/domain/entities/TodoList';
 
 describe('domain.models.TodoList', function () {
   describe('Constructor', function () {

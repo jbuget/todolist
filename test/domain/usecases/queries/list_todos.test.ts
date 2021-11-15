@@ -1,6 +1,6 @@
 import { listTodos } from '../../../../src/domain/usecases/queries/list_todos';
 import { Todo } from '../../../../src/domain/models/Todo';
-import { TodoRepository } from '../../../../src/domain/repositories/TodoRepository';
+import { TodoRepository } from '../../../../src/domain/models/TodoRepository';
 import { TodoList } from '../../../../src/domain/models/TodoList';
 
 describe('domain.usecases.queries.list_todos', function () {
