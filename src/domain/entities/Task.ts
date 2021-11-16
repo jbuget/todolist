@@ -5,7 +5,7 @@ export enum Status {
   DONE = 'DONE'
 }
 
-export class Todo {
+export class Task {
   id: number | null;
   createdAt: Date;
   updatedAt: Date;

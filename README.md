@@ -1,6 +1,6 @@
-# TodoList
+# TaskList
 
-TodoList est l'application Node/TypeScript développée en live coding au cours de l'émission "L'Atelier du Code".
+TaskList est l'application Node/TypeScript développée en live coding au cours de l'émission "L'Atelier du Code".
 
 D'un point de vue fonctionnel, il s'agit d'un projet basique de gestion de choses à faire (a.k.a. des Todos).
 
@@ -10,7 +10,7 @@ L'objectif du projet est de montrer la mise en place, le développement, le dép
 
 ### Liens
 
-- [Démo](https://todolist.osc-fr1.scalingo.io/todos)
+- [Démo](https://todolist.osc-fr1.scalingo.io/tasks)
 - [Twitch](https://twitch.tv/jeremybuget)
 - [YouTube](https://www.youtube.com/channel/UCCA8eDqAjDSsWPUftDzWozA)
 - [GitHub](https://github.com/jbuget/todolist)
