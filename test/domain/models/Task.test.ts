@@ -1,8 +1,8 @@
-import { Status, Todo } from '../../../src/domain/entities/Todo';
+import { Status, Task } from '../../../src/domain/entities/Task';
 
-describe('domain.models.Todo', function () {
+describe('domain.models.Task', function () {
   describe('Constructor', function () {
-    it('should return an instance of Todo', () => {
+    it('should return an instance of Task', () => {
       // given
       const date = new Date('2021-11-15T20:16:00');
       const options = {
@@ -14,11 +14,11 @@ describe('domain.models.Todo', function () {
       };
 
       // when
-      const todo: Todo = new Todo(options);
+      const task: Task = new Task(options);
 
       // then
-      expect(todo).toBeInstanceOf(Todo);
-      expect({ ...todo }).toStrictEqual({
+      expect(task).toBeInstanceOf(Task);
+      expect({ ...task }).toStrictEqual({
         id: 1,
         createdAt: new Date('2021-11-15T20:16:00'),
         updatedAt: new Date('2021-11-15T20:16:00'),
@@ -39,10 +39,10 @@ describe('domain.models.Todo', function () {
       };
 
       // when
-      const todo: Todo = new Todo(options);
+      const task: Task = new Task(options);
 
       // then
-      expect(todo.id).toBeNull();
+      expect(task.id).toBeNull();
     });
 
     it('should set status "TO_DO" by default', () => {
@@ -56,10 +56,10 @@ describe('domain.models.Todo', function () {
       };
 
       // when
-      const todo: Todo = new Todo(options);
+      const task: Task = new Task(options);
 
       // then
-      expect(todo.status).toBe(Status.TO_DO);
+      expect(task.status).toBe(Status.TO_DO);
     });
 
     it('should set "updatedAd" as "createdAt" by default', () => {
@@ -71,10 +71,10 @@ describe('domain.models.Todo', function () {
       };
 
       // when
-      const todo: Todo = new Todo(options);
+      const task: Task = new Task(options);
 
       // then
-      expect(todo.updatedAt).toBe(date);
+      expect(task.updatedAt).toBe(date);
     });
   });
 });

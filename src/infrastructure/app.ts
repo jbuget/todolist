@@ -13,9 +13,9 @@ function build(logger?: P.Logger): FastifyInstance {
     return 'pong\n';
   });
 
-  server.get('/todos', async () => {
+  server.get('/tasks', async () => {
     try {
-      return await prisma.todo.findMany();
+      return await prisma.task.findMany();
     } finally {
       await prisma.$disconnect();
     }
