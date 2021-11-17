@@ -1,8 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { P } from 'pino';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { listTasks } from '../domain/usecases/queries/list_tasks';
+import { TaskRepositorySql } from './repositories/TaskRepositorySql';
 
 function build(logger?: P.Logger): FastifyInstance {
   const server = fastify({
@@ -15,11 +14,9 @@ function build(logger?: P.Logger): FastifyInstance {
 
   // Get all tasks
   server.get('/tasks', async () => {
-    try {
-      return await prisma.task.findMany();
-    } finally {
-      await prisma.$disconnect();
-    }
+    const taskRepository = new TaskRepositorySql();
+    const taskList = await listTasks(taskRepository);
+    return taskList.tasks;
   });
 
   // Crate a new task
