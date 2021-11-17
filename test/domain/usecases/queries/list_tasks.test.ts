@@ -4,7 +4,7 @@ import { TaskRepository } from '../../../../src/domain/entities/TaskRepository';
 import { TaskList } from '../../../../src/domain/entities/TaskList';
 
 describe('domain.usecases.queries.list_tasks', function () {
-  it('should have a method #listTasks', () => {
+  it('should have a method #listTasks', async () => {
     // given
     const now = new Date('2021-11-15T20:01:45.264Z');
     const task1: Task = new Task({ id: 1, createdAt: now, content: 'Task_content_1' });
@@ -12,13 +12,13 @@ describe('domain.usecases.queries.list_tasks', function () {
     const taskList: TaskList = new TaskList([task1, task2]);
 
     const taskRepository: TaskRepository = {
-      findAll(): TaskList {
+      async findAll(): Promise<TaskList> {
         return taskList;
       }
     };
 
     // when
-    const tasks: TaskList = listTasks(taskRepository);
+    const tasks: TaskList = await listTasks(taskRepository);
 
     // then
     expect(tasks).toStrictEqual(taskList);

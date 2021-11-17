@@ -1,8 +1,8 @@
 import { TaskRepository } from '../../entities/TaskRepository';
 import { TaskList } from '../../entities/TaskList';
 
-function listTasks(taskRepository: TaskRepository): TaskList {
-  return taskRepository.findAll();
+async function listTasks(taskRepository: TaskRepository): Promise<TaskList> {
+  return await taskRepository.findAll();
 }
 
 export {
