@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { P } from 'pino';
 import { listTasks } from '../domain/usecases/queries/list_tasks';
+import { createTask } from '../domain/usecases/commands/create_task';
 import { TaskRepositorySql } from './repositories/TaskRepositorySql';
 
 function build(logger?: P.Logger): FastifyInstance {
@@ -20,8 +21,10 @@ function build(logger?: P.Logger): FastifyInstance {
   });
 
   // Crate a new task
-  server.post('/tasks', async (request, reply) => {
-    reply.code(501).send();
+  server.post('/tasks', async (request) => {
+    const params = request.body;
+    const taskRepository = new TaskRepositorySql();
+    return await createTask(params, taskRepository);
   });
 
   // Get a task

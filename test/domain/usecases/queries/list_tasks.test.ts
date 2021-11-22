@@ -12,6 +12,9 @@ describe('domain.usecases.queries.list_tasks', function () {
     const taskList: TaskList = new TaskList([task1, task2]);
 
     const taskRepository: TaskRepository = {
+      async save(task: Task): Promise<Task> {
+        return task;
+      },
       async findAll(): Promise<TaskList> {
         return taskList;
       }
