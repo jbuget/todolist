@@ -14,7 +14,7 @@
     "prestart": "npm run build",
     "start": "node dist/server",
     "pretest": "npm run build:dev",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "prisma": {
     "seed": "node --loader ts-node/esm ./prisma/seed.ts"

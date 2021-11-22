@@ -22,4 +22,29 @@ export class TaskRepositorySql implements TaskRepository {
     }
     return new TaskList(domainTasks);
   }
+
+  async save(taskToSave: Task): Promise<Task> {
+    const prisma = new PrismaClient();
+    let domainTask: Task;
+    try {
+      const prismaTask = await prisma.task.create({
+        data: {
+          content: taskToSave.content,
+          status: taskToSave.status,
+          createdAt: taskToSave.createdAt,
+          updatedAt: taskToSave.updatedAt
+        }
+      });
+      domainTask = new Task({
+        id: prismaTask.id,
+        content: prismaTask.content,
+        createdAt: prismaTask.createdAt,
+        updatedAt: prismaTask.updatedAt,
+        status: prismaTask.status as Status
+      });
+    } finally {
+      await prisma.$disconnect();
+    }
+    return domainTask;
+  }
 }
