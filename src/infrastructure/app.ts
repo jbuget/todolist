@@ -10,46 +10,46 @@ function build(logger?: P.Logger): FastifyInstance {
     logger
   });
 
-  server.get('/ping', async () => {
+  server.get('/ping', async function () {
     return 'pong\n';
   });
 
   // Get all tasks
-  server.get('/tasks', async () => {
+  server.get('/tasks', async function () {
     const taskRepository: TaskRepository = container.resolve('taskRepository');
     const taskList = await listTasks(taskRepository);
     return taskList.tasks;
   });
 
   // Crate a new task
-  server.post('/tasks', async (request) => {
+  server.post('/tasks', async function (request) {
     const params = request.body;
     const taskRepository: TaskRepository = container.resolve('taskRepository');
     return await createTask(params, taskRepository);
   });
 
   // Get a task
-  server.get('/tasks/:id', async (request, reply) => {
+  server.get('/tasks/:id', async function (request, reply) {
     reply.code(501).send();
   });
 
   // Update a task
-  server.post('/tasks/:id', async (request, reply) => {
+  server.post('/tasks/:id', async function (request, reply) {
     reply.code(501).send();
   });
 
   // Close a task
-  server.post('/tasks/:id/close', async (request, reply) => {
+  server.post('/tasks/:id/close', async function (request, reply) {
     reply.code(501).send();
   });
 
   // Reopen a task
-  server.post('/tasks/:id/reopen', async (request, reply) => {
+  server.post('/tasks/:id/reopen', async function (request, reply) {
     reply.code(501).send();
   });
 
   // Delete a task
-  server.delete('/tasks/:id', async (request, reply) => {
+  server.delete('/tasks/:id', async function (request, reply) {
     reply.code(501).send();
   });
 

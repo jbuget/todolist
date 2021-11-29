@@ -32,7 +32,7 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
         }]
       });
 
-      const taskRepository = new TaskRepositorySql();
+      const taskRepository = new TaskRepositorySql(prisma);
 
       // when
       const tasks: TaskList = await taskRepository.findAll();
@@ -71,7 +71,7 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
       const prisma = getPrismaClient();
       const prismaTasksBefore = await prisma.task.count();
 
-      const taskRepository = new TaskRepositorySql();
+      const taskRepository = new TaskRepositorySql(prisma);
       const taskToInsert: Task = new Task({ id: null, content: 'New task', createdAt: new Date(Date.now()) });
 
       // when
@@ -84,7 +84,8 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
 
     it('should return the instance of Task inserted and persisted', async () => {
       // given
-      const taskRepository = new TaskRepositorySql();
+      const prisma = getPrismaClient();
+      const taskRepository = new TaskRepositorySql(prisma);
       const now = new Date(Date.now());
       const taskToInsert: Task = new Task({
         id: null,
