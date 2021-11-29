@@ -2,7 +2,8 @@ import fastify, { FastifyInstance } from 'fastify';
 import { P } from 'pino';
 import { listTasks } from '../domain/usecases/queries/list_tasks';
 import { createTask } from '../domain/usecases/commands/create_task';
-import { TaskRepositorySql } from './repositories/TaskRepositorySql';
+import { TaskRepository } from '../domain/entities/TaskRepository';
+import { container } from './container';
 
 function build(logger?: P.Logger): FastifyInstance {
   const server = fastify({
@@ -15,7 +16,7 @@ function build(logger?: P.Logger): FastifyInstance {
 
   // Get all tasks
   server.get('/tasks', async () => {
-    const taskRepository = new TaskRepositorySql();
+    const taskRepository: TaskRepository = container.resolve('taskRepository');
     const taskList = await listTasks(taskRepository);
     return taskList.tasks;
   });
@@ -23,7 +24,7 @@ function build(logger?: P.Logger): FastifyInstance {
   // Crate a new task
   server.post('/tasks', async (request) => {
     const params = request.body;
-    const taskRepository = new TaskRepositorySql();
+    const taskRepository: TaskRepository = container.resolve('taskRepository');
     return await createTask(params, taskRepository);
   });
 
