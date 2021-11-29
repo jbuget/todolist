@@ -4,8 +4,14 @@ import { TaskList } from '../../domain/entities/TaskList';
 import { Status, Task } from '../../domain/entities/Task';
 
 export class TaskRepositorySql implements TaskRepository {
+  private readonly prisma: PrismaClient;
+
+  constructor(prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+
   async findAll(): Promise<TaskList> {
-    const prisma = new PrismaClient();
+    const prisma = this.prisma;
 
     let domainTasks: Task[];
     try {
@@ -24,7 +30,8 @@ export class TaskRepositorySql implements TaskRepository {
   }
 
   async save(taskToSave: Task): Promise<Task> {
-    const prisma = new PrismaClient();
+    const prisma = this.prisma;
+
     let domainTask: Task;
     try {
       const prismaTask = await prisma.task.create({

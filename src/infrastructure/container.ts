@@ -1,4 +1,4 @@
-import { asClass, createContainer } from 'awilix';
+import { asClass, asValue, createContainer } from 'awilix';
 import { TaskRepositorySql } from './repositories/TaskRepositorySql';
 import { PrismaClient } from '@prisma/client';
 
@@ -7,7 +7,7 @@ const container = createContainer({
 });
 
 container.register({
-  prisma: asClass(PrismaClient),
+  prisma: asValue(new PrismaClient()),
   taskRepository: asClass(TaskRepositorySql)
 });
 
