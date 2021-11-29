@@ -3,7 +3,7 @@ import { getPrismaClient, resetDatabase } from '../test-helpers';
 import { Status } from '../../src/domain/entities/Task';
 
 describe('API', () => {
-  const server = app();
+  const server = app(undefined);
 
   describe('GET /ping', () => {
     it('should return the string "pong"', async () => {
