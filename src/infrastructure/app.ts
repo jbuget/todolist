@@ -1,11 +1,11 @@
 import fastify, { FastifyInstance } from 'fastify';
-import { P } from 'pino';
 import { listTasks } from '../domain/usecases/queries/list_tasks';
 import { createTask } from '../domain/usecases/commands/create_task';
 import { TaskRepository } from '../domain/entities/TaskRepository';
 import { container } from './container';
 
-function build(logger?: P.Logger): FastifyInstance {
+function build(): FastifyInstance {
+  const logger = container.resolve('logger');
   const server = fastify({
     logger
   });
