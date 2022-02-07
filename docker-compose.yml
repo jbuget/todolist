@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: todolist
     ports:
-      - 5432:5432
+      - 10864:5432
 
   adminer:
     image: adminer
