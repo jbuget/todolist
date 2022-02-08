@@ -11,6 +11,9 @@ describe('domain.usecases.commands.create_task', function () {
     const stubbedSavedTask: Task = new Task({ id: 1, createdAt: now, content: params.content });
 
     const taskRepository: TaskRepository = {
+      async findById(id: number): Promise<Task | null> {
+        return null;
+      },
       async findAll(): Promise<TaskList> {
         return new TaskList();
       },

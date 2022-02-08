@@ -22,7 +22,7 @@ describe('API', () => {
     });
 
     describe('GET /', () => {
-      it('should returns the list of all stored Tasks', async () => {
+      it('should return the list of all stored Tasks', async () => {
         // given
         const prisma = getPrismaClient();
         await prisma.task.createMany({
@@ -90,6 +90,53 @@ describe('API', () => {
         expect(json.status).toStrictEqual(Status.TO_DO);
         expect(json.createdAt).toBeDefined();
         expect(json.updatedAt).toBeDefined();
+      });
+    });
+
+    describe('GET /:id', () => {
+      it('should return 200 with the task matching the given ID', async () => {
+        // given
+        const prisma = getPrismaClient();
+        await prisma.task.create({
+          data: {
+            id: 1,
+            content: 'Task 1 content',
+            status: 'DONE',
+            createdAt: new Date('2021-11-09T17:08:02.865Z'),
+            updatedAt: new Date('2021-11-09T17:08:02.866Z')
+          }
+        });
+
+        // when
+        const response = await server.inject({ method: 'GET', url: '/tasks/1' });
+
+        // then
+        expect(response.statusCode).toBe(200);
+        expect(response.json()).toStrictEqual({
+          content: 'Task 1 content',
+          createdAt: '2021-11-09T17:08:02.865Z',
+          id: 1,
+          status: 'DONE',
+          updatedAt: '2021-11-09T17:08:02.866Z'
+        });
+      });
+
+      it('should return 404 when no task ID matches the given ID', async () => {
+        // when
+        const response = await server.inject({ method: 'GET', url: '/tasks/999999' });
+
+        // then
+        expect(response.statusCode).toBe(404);
+      });
+
+      it('should return 429 when the given ID is not a number', async () => {
+        // given
+
+        // when
+        const response = await server.inject({ method: 'GET', url: '/tasks/bad_id' });
+
+        // then
+        expect(response.statusCode).toBe(429);
       });
     });
   });

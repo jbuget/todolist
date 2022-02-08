@@ -5,4 +5,6 @@ export interface TaskRepository {
   findAll(): Promise<TaskList>;
 
   save(task: Task): Promise<Task>;
+
+  findById(id: number): Promise<Task|null>;
 }

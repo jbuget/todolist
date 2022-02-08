@@ -1,8 +1,9 @@
-import fastify, { FastifyInstance } from 'fastify';
+import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { listTasks } from '../domain/usecases/queries/list_tasks';
 import { createTask } from '../domain/usecases/commands/create_task';
 import { TaskRepository } from '../domain/entities/TaskRepository';
 import { container } from './container';
+import { getTaskById } from '../domain/usecases/queries/get_task_by_id';
 
 function build(): FastifyInstance {
   const logger = container.resolve('logger');
@@ -29,8 +30,19 @@ function build(): FastifyInstance {
   });
 
   // Get a task
-  server.get('/tasks/:id', async function (request, reply) {
-    reply.code(501).send();
+  server.get('/tasks/:id', async function (request: FastifyRequest<any>, reply: FastifyReply<any>) {
+    const taskId = parseInt(request.params.id);
+    if (isNaN(taskId)) {
+      reply.code(429).send();
+    } else {
+      const taskRepository: TaskRepository = container.resolve('taskRepository');
+      const task = await getTaskById(taskId, taskRepository);
+      if (!task) {
+        reply.code(404).send();
+      } else {
+        return task;
+      }
+    }
   });
 
   // Update a task
