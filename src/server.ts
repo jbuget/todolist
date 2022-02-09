@@ -1,10 +1,10 @@
 import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import { listTasks } from '../domain/usecases/queries/list_tasks';
-import { createTask } from '../domain/usecases/commands/create_task';
-import { TaskRepository } from '../domain/entities/TaskRepository';
-import { container } from './container';
-import { getTaskById } from '../domain/usecases/queries/get_task_by_id';
-import { deleteTask } from '../domain/usecases/commands/delete_task';
+import { listTasks } from './domain/usecases/queries/list_tasks';
+import { createTask } from './domain/usecases/commands/create_task';
+import { TaskRepository } from './domain/entities/TaskRepository';
+import { getTaskById } from './domain/usecases/queries/get_task_by_id';
+import { deleteTask } from './domain/usecases/commands/delete_task';
+import { container } from './infrastructure/container';
 
 function build(): FastifyInstance {
   const logger = container.resolve('logger');

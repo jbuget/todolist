@@ -1,12 +1,12 @@
 import { environment } from './environment';
-import { build as buildApp } from './infrastructure/app';
+import { build as buildServer } from './server';
 import { FastifyInstance } from 'fastify';
 
-const main: FastifyInstance = buildApp();
+const server: FastifyInstance = buildServer();
 
-main.listen(environment.server.port, environment.server.host, (err) => {
+server.listen(environment.server.port, environment.server.host, (err) => {
   if (err) {
-    main.log.error(err);
+    server.log.error(err);
     process.exit(1);
   }
 });

@@ -1,6 +1,6 @@
-import { build as app } from '../../src/infrastructure/app';
-import { getPrismaClient, getRandomInt, resetDatabase } from '../test-helpers';
-import { Status } from '../../src/domain/entities/Task';
+import { build as app } from '../src/server';
+import { getPrismaClient, getRandomInt, resetDatabase } from './test-helpers';
+import { Status } from '../src/domain/entities/Task';
 
 describe('API', () => {
   const server = app();
