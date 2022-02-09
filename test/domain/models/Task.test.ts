@@ -31,7 +31,7 @@ describe('domain.models.Task', function () {
       // given
       const date = new Date('2021-11-15T20:16:00');
       const options = {
-        id: null,
+        id: undefined,
         createdAt: date,
         updatedAt: date,
         content: 'Dire à ma maman que je l’aime',
@@ -42,14 +42,14 @@ describe('domain.models.Task', function () {
       const task: Task = new Task(options);
 
       // then
-      expect(task.id).toBeNull();
+      expect(task.id).toBeUndefined();
     });
 
     it('should set status "TO_DO" by default', () => {
       // given
       const date = new Date('2021-11-15T20:16:00');
       const options = {
-        id: null,
+        id: undefined,
         createdAt: date,
         updatedAt: date,
         content: 'Dire à ma maman que je l’aime'
@@ -65,7 +65,7 @@ describe('domain.models.Task', function () {
     it('should set "updatedAd" as "createdAt" by default', () => {
       const date = new Date('2021-11-15T20:16:00');
       const options = {
-        id: null,
+        id: undefined,
         createdAt: date,
         content: 'Dire à ma maman que je l’aime'
       };

@@ -12,6 +12,9 @@ describe('domain.usecases.queries.list_tasks', function () {
     const taskList: TaskList = new TaskList([task1, task2]);
 
     const taskRepository: TaskRepository = {
+      delete(/* task: Task */): Promise<void> {
+        return Promise.resolve();
+      },
       async findById(id: number): Promise<Task | null> {
         return null;
       },

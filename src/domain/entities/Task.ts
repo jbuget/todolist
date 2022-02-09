@@ -6,13 +6,13 @@ export enum Status {
 }
 
 export class Task {
-  id: number | null;
+  id: number | undefined;
   createdAt: Date;
   updatedAt: Date;
   content: string;
   status: Status;
 
-  constructor(options : {id: number | null, content: string, createdAt: Date, status?: Status, updatedAt?: Date}) {
+  constructor(options : {id: number | undefined, content: string, createdAt: Date, status?: Status, updatedAt?: Date}) {
     this.id = options.id;
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt || this.createdAt;

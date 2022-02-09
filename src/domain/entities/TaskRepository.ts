@@ -6,5 +6,7 @@ export interface TaskRepository {
 
   save(task: Task): Promise<Task>;
 
-  findById(id: number): Promise<Task|null>;
+  findById(id: number): Promise<Task | null>;
+
+  delete(task: Task): Promise<void>;
 }

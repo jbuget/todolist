@@ -9,6 +9,10 @@ function getPrismaClient() {
   return new PrismaClient();
 }
 
+function getRandomInt(max: number = 10_000): number {
+  return Math.floor(Math.random() * max);
+}
+
 async function resetDatabase() {
   const prisma = getPrismaClient();
   return prisma.task.deleteMany({});
@@ -16,5 +20,6 @@ async function resetDatabase() {
 
 export {
   getPrismaClient,
+  getRandomInt,
   resetDatabase
 };

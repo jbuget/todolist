@@ -72,7 +72,7 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
       const prismaTasksBefore = await prisma.task.count();
 
       const taskRepository = new TaskRepositorySql(prisma);
-      const taskToInsert: Task = new Task({ id: null, content: 'New task', createdAt: new Date(Date.now()) });
+      const taskToInsert: Task = new Task({ id: undefined, content: 'New task', createdAt: new Date(Date.now()) });
 
       // when
       await taskRepository.save(taskToInsert);
@@ -88,7 +88,7 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
       const taskRepository = new TaskRepositorySql(prisma);
       const now = new Date(Date.now());
       const taskToInsert: Task = new Task({
-        id: null,
+        id: undefined,
         content: 'New task',
         status: Status.DONE,
         createdAt: now,
@@ -104,6 +104,30 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
       expect(savedTask.status).toStrictEqual(Status.DONE);
       expect(savedTask.createdAt).toStrictEqual(now);
       expect(savedTask.updatedAt).toStrictEqual(now);
+    });
+  });
+
+  describe('#delete', () => {
+    it('should ', async () => {
+      // given
+      const prisma = getPrismaClient();
+      const taskRepository = new TaskRepositorySql(prisma);
+      const now = new Date(Date.now());
+      const taskToInsert: Task = new Task({
+        id: undefined,
+        content: 'New task',
+        status: Status.DONE,
+        createdAt: now,
+        updatedAt: now
+      });
+      const savedTask: Task = await taskRepository.save(taskToInsert);
+
+      // when
+      await taskRepository.delete(savedTask);
+
+      // then
+      const data = await prisma.task.findUnique({ where: { id: savedTask.id } });
+      expect(data).toBeNull();
     });
   });
 });

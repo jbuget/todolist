@@ -1,5 +1,5 @@
 import { build as app } from '../../src/infrastructure/app';
-import { getPrismaClient, resetDatabase } from '../test-helpers';
+import { getPrismaClient, getRandomInt, resetDatabase } from '../test-helpers';
 import { Status } from '../../src/domain/entities/Task';
 
 describe('API', () => {
@@ -96,10 +96,11 @@ describe('API', () => {
     describe('GET /:id', () => {
       it('should return 200 with the task matching the given ID', async () => {
         // given
+        const taskId = getRandomInt();
         const prisma = getPrismaClient();
         await prisma.task.create({
           data: {
-            id: 1,
+            id: taskId,
             content: 'Task 1 content',
             status: 'DONE',
             createdAt: new Date('2021-11-09T17:08:02.865Z'),
@@ -108,14 +109,14 @@ describe('API', () => {
         });
 
         // when
-        const response = await server.inject({ method: 'GET', url: '/tasks/1' });
+        const response = await server.inject({ method: 'GET', url: `/tasks/${taskId}` });
 
         // then
         expect(response.statusCode).toBe(200);
         expect(response.json()).toStrictEqual({
           content: 'Task 1 content',
           createdAt: '2021-11-09T17:08:02.865Z',
-          id: 1,
+          id: taskId,
           status: 'DONE',
           updatedAt: '2021-11-09T17:08:02.866Z'
         });
@@ -137,6 +138,31 @@ describe('API', () => {
 
         // then
         expect(response.statusCode).toBe(429);
+      });
+    });
+
+    describe('DELETE /:id', () => {
+      it('should delete the given task and return 204', async () => {
+        // given
+        const taskId = getRandomInt();
+        const prisma = getPrismaClient();
+        await prisma.task.create({
+          data: {
+            id: taskId,
+            content: 'Task 6 content',
+            status: 'TO_DO',
+            createdAt: new Date('2022-02-15T17:08:02.865Z'),
+            updatedAt: new Date('2022-02-15T17:08:02.866Z')
+          }
+        });
+
+        // when
+        const response = await server.inject({ method: 'DELETE', url: `/tasks/${taskId}` });
+
+        // then
+        expect(response.statusCode).toBe(204);
+        const data = await prisma.task.findUnique({ where: { id: taskId } });
+        expect(data).toBeNull();
       });
     });
   });

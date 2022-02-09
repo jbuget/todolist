@@ -73,4 +73,16 @@ export class TaskRepositorySql implements TaskRepository {
     }
     return null;
   }
+
+  async delete(task: Task): Promise<void> {
+    const prisma = this.prisma;
+    try {
+      const prismaTask = await prisma.task.findUnique({ where: { id: task.id } });
+      if (prismaTask) {
+        await prisma.task.delete({ where: { id: task.id } });
+      }
+    } finally {
+      await prisma.$disconnect();
+    }
+  }
 }
