@@ -130,14 +130,14 @@ describe('API', () => {
         expect(response.statusCode).toBe(404);
       });
 
-      it('should return 429 when the given ID is not a number', async () => {
+      it('should return 400 when the given ID is not a number', async () => {
         // given
 
         // when
         const response = await server.inject({ method: 'GET', url: '/tasks/bad_id' });
 
         // then
-        expect(response.statusCode).toBe(429);
+        expect(response.statusCode).toBe(400);
       });
     });
 

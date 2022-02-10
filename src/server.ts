@@ -34,7 +34,7 @@ function build(): FastifyInstance {
   server.get('/tasks/:id', async function (request: FastifyRequest<any>, reply: FastifyReply<any>) {
     const taskId: number = parseInt(request.params.id);
     if (isNaN(taskId)) {
-      reply.code(429).send();
+      reply.code(400).send();
     } else {
       const taskRepository: TaskRepository = container.resolve('taskRepository');
       const task = await getTaskById(taskId, taskRepository);
