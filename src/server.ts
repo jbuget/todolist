@@ -1,4 +1,4 @@
-import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import fastify, { FastifyInstance } from 'fastify';
 import { listTasks } from './domain/usecases/queries/list_tasks';
 import { createTask } from './domain/usecases/commands/create_task';
 import { TaskRepository } from './domain/entities/TaskRepository';
@@ -31,7 +31,11 @@ function build(): FastifyInstance {
   });
 
   // Get a task
-  server.get('/tasks/:id', async function (request: FastifyRequest<any>, reply: FastifyReply<any>) {
+  server.get<{
+    Params: {
+      id: string;
+    }
+  }>('/tasks/:id', async function (request, reply) {
     const taskId: number = parseInt(request.params.id);
     if (isNaN(taskId)) {
       reply.code(400).send();
@@ -62,7 +66,11 @@ function build(): FastifyInstance {
   });
 
   // Delete a task
-  server.delete('/tasks/:id', async function (request: FastifyRequest<any>, reply: FastifyReply<any>) {
+  server.delete<{
+    Params: {
+      id: string;
+    }
+  }>('/tasks/:id', async function (request, reply) {
     const taskId: number = parseInt(request.params.id);
     const taskRepository: TaskRepository = container.resolve('taskRepository');
     await deleteTask(taskId, taskRepository);

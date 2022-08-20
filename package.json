@@ -55,10 +55,10 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@prisma/client": "^3.9.1",
-    "awilix": "^6.1.0",
-    "fastify": "^3.27.1",
-    "pino": "^7.6.5",
-    "pino-pretty": "^7.5.1"
+    "@prisma/client": "^4.2.1",
+    "awilix": "^7.0.3",
+    "fastify": "^4.5.2",
+    "pino": "^8.4.2",
+    "pino-pretty": "^9.0.1"
   }
 }
