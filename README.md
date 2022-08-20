@@ -61,8 +61,19 @@ npm run configure
 
 Il est possible de paramétrer certains aspects de l'application (logger, base de données) via des variables d'environnement.
 
-Le moyen le plus simple est de renseigner/modifier celles-ci depuis le fichier .env propre à votre environnement.
+Le moyen le plus simple est de renseigner/modifier celles-ci depuis le fichier `.env` propre à votre environnement.
 
 ## Licence
 
 Ce logiciel est développé et distribué sous licence [AGPL v3](https://fr.wikipedia.org/wiki/GNU_Affero_General_Public_License).
+
+## Roadmap
+
+- [ ] Mettre en place un Swagger / OpenAPI
+- [ ] Rédiger un guide de design de l'API
+- [ ] Ajouter des métriques système (pour Prometheus)
+- [ ] Voir ce qu'on peut faire avec pm2 (monitoring)
+- [ ] Ajouter un Aggregate Root `User`, intéressant pour voir comment gérer des relations, niveau HTTP/REST ou ORM/DB
+- [ ] Ajouter des tests de charge avec Artillery
+- [ ] Mettre en place une gestion des erreurs
+- [ ] Faire en sorte que les tâches soient chiffrées (par compte utilisateur)
