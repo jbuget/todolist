@@ -4,7 +4,7 @@ import { FastifyInstance } from 'fastify';
 
 const server: FastifyInstance = buildServer();
 
-server.listen(environment.server.port, environment.server.host, (err) => {
+server.listen({ port: environment.server.port, host: environment.server.host }, (err) => {
   if (err) {
     server.log.error(err);
     process.exit(1);
