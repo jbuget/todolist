@@ -6,6 +6,7 @@ import { getTaskById } from './domain/usecases/queries/get_task_by_id';
 import { deleteTask } from './domain/usecases/commands/delete_task';
 import { container } from './infrastructure/container';
 import { closeTask } from './domain/usecases/commands/close_task';
+import { reopenTask } from './domain/usecases/commands/reopen_task';
 
 function build(): FastifyInstance {
   const logger = container.resolve('logger');
@@ -73,8 +74,19 @@ function build(): FastifyInstance {
   });
 
   // Reopen a task
-  server.post('/tasks/:id/reopen', async function (request, reply) {
-    reply.code(501).send();
+  server.post<{
+    Params: {
+      id: string;
+    }
+  }>('/tasks/:id/reopen', async function (request, reply) {
+    const taskId: number = parseInt(request.params.id);
+    if (isNaN(taskId)) {
+      reply.code(400).send();
+    } else {
+      const taskRepository: TaskRepository = container.resolve('taskRepository');
+      await reopenTask(taskId, taskRepository);
+      reply.code(204).send();
+    }
   });
 
   // Delete a task

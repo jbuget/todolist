@@ -5,6 +5,8 @@ import { Status } from '../src/domain/entities/Task';
 describe('API', () => {
   const server = app();
 
+  const prisma = getPrismaClient();
+
   describe('GET /ping', () => {
     it('should return the string "pong"', async () => {
       // when
@@ -24,7 +26,6 @@ describe('API', () => {
     describe('GET /', () => {
       it('should return the list of all stored Tasks', async () => {
         // given
-        const prisma = getPrismaClient();
         await prisma.task.createMany({
           data: [{
             id: 1,
@@ -97,7 +98,6 @@ describe('API', () => {
       it('should return 200 with the task matching the given ID', async () => {
         // given
         const taskId = getRandomInt();
-        const prisma = getPrismaClient();
         await prisma.task.create({
           data: {
             id: taskId,
@@ -145,7 +145,6 @@ describe('API', () => {
       it('should delete the given task and return 204', async () => {
         // given
         const taskId = getRandomInt();
-        const prisma = getPrismaClient();
         await prisma.task.create({
           data: {
             id: taskId,
@@ -170,7 +169,6 @@ describe('API', () => {
       it('should close (set status to "DONE" the given task and return 204', async () => {
         // given
         const taskId = getRandomInt();
-        const prisma = getPrismaClient();
         await prisma.task.create({
           data: {
             id: taskId,
@@ -189,6 +187,31 @@ describe('API', () => {
         const data = await prisma.task.findUnique({ where: { id: taskId } });
         // @ts-ignore
         expect(data.status).toStrictEqual(Status.DONE);
+      });
+    });
+
+    describe('POST /:id/reopen', () => {
+      it('should reopen (set status to "DONE" the given task and return 204', async () => {
+        // given
+        const taskId = getRandomInt();
+        await prisma.task.create({
+          data: {
+            id: taskId,
+            content: 'Task content',
+            status: 'DONE',
+            createdAt: new Date('2022-02-15T17:08:02.865Z'),
+            updatedAt: new Date('2022-02-15T17:08:02.866Z')
+          }
+        });
+
+        // when
+        const response = await server.inject({ method: 'POST', url: `/tasks/${taskId}/reopen` });
+
+        // then
+        expect(response.statusCode).toBe(204);
+        const data = await prisma.task.findUnique({ where: { id: taskId } });
+        // @ts-ignore
+        expect(data.status).toStrictEqual(Status.TO_DO);
       });
     });
   });

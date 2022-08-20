@@ -32,7 +32,16 @@ export class Task {
   }
 
   close() {
-    this.status = Status.DONE;
-    this.updatedAt = new Date(Date.now());
+    if (this.status !== Status.DONE) {
+      this.status = Status.DONE;
+      this.updatedAt = new Date(Date.now());
+    }
+  }
+
+  reopen() {
+    if (this.status !== Status.TO_DO) {
+      this.status = Status.TO_DO;
+      this.updatedAt = new Date(Date.now());
+    }
   }
 }

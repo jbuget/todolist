@@ -1,14 +1,14 @@
-import { closeTask } from '../../../../src/domain/usecases/commands/close_task';
+import { reopenTask } from '../../../../src/domain/usecases/commands/reopen_task';
 import { Status, Task } from '../../../../src/domain/entities/Task';
 import { TaskRepository } from '../../../../src/domain/entities/TaskRepository';
 import { TaskList } from '../../../../src/domain/entities/TaskList';
 
-describe('domain.usecases.commands.close_task', function () {
-  it('should have a method #closeTask', async () => {
+describe('domain.usecases.commands.reopen_task', function () {
+  it('should have a method #reopenTask', async () => {
     // given
     const taskId: number = 1;
     const createdAt = new Date('2021-11-20T17:27:45.264Z');
-    const stubbedSavedTask: Task = new Task({ id: taskId, createdAt, updatedAt: createdAt, content: 'Task content', status: Status.TO_DO });
+    const stubbedSavedTask: Task = new Task({ id: taskId, createdAt, updatedAt: createdAt, content: 'Task content', status: Status.DONE });
 
     const taskRepository: TaskRepository = {
       delete(/* task: Task */): Promise<void> {
@@ -26,10 +26,10 @@ describe('domain.usecases.commands.close_task', function () {
     };
 
     // when
-    await closeTask(taskId, taskRepository);
+    await reopenTask(taskId, taskRepository);
 
     // then
-    expect(stubbedSavedTask.status).toEqual(Status.DONE);
+    expect(stubbedSavedTask.status).toEqual(Status.TO_DO);
     expect(stubbedSavedTask.updatedAt.getTime() > createdAt.getTime()).toBe(true);
   });
 });
