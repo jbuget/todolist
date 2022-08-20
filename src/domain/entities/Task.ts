@@ -30,4 +30,9 @@ export class Task {
   changeUpdateAt(updatedAt: Date) {
     this.updatedAt = updatedAt;
   }
+
+  close() {
+    this.status = Status.DONE;
+    this.updatedAt = new Date(Date.now());
+  }
 }
