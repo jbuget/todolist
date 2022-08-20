@@ -214,5 +214,30 @@ describe('API', () => {
         expect(data.status).toStrictEqual(Status.TO_DO);
       });
     });
+
+    describe('POST /:id', () => {
+      it('should update a task content and return 204', async () => {
+        // given
+        const taskId = getRandomInt();
+        await prisma.task.create({
+          data: {
+            id: taskId,
+            content: 'Task content',
+            status: 'TO_DO',
+            createdAt: new Date('2022-02-15T17:08:02.865Z'),
+            updatedAt: new Date('2022-02-15T17:08:02.866Z')
+          }
+        });
+
+        // when
+        const response = await server.inject({ method: 'POST', url: `/tasks/${taskId}`, payload: { content: 'New content' } });
+
+        // then
+        expect(response.statusCode).toBe(204);
+        const data = await prisma.task.findUnique({ where: { id: taskId } });
+        // @ts-ignore
+        expect(data.content).toStrictEqual('New content');
+      });
+    });
   });
 });

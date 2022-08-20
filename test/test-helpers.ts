@@ -6,7 +6,8 @@ function getPrismaClient() {
   if (prismaClient) {
     return prismaClient;
   }
-  return new PrismaClient();
+  prismaClient = new PrismaClient();
+  return prismaClient;
 }
 
 function getRandomInt(max: number = 10_000): number {
