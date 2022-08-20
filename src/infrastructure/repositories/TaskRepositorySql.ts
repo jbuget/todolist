@@ -31,28 +31,25 @@ export class TaskRepositorySql implements TaskRepository {
 
   async save(taskToSave: Task): Promise<Task> {
     const prisma = this.prisma;
-
-    let domainTask: Task;
     try {
-      const prismaTask = await prisma.task.create({
-        data: {
-          content: taskToSave.content,
-          status: taskToSave.status,
-          createdAt: taskToSave.createdAt,
-          updatedAt: taskToSave.updatedAt
-        }
-      });
-      domainTask = new Task({
-        id: prismaTask.id,
-        content: prismaTask.content,
-        createdAt: prismaTask.createdAt,
-        updatedAt: prismaTask.updatedAt,
-        status: prismaTask.status as Status
-      });
+      const data = {
+        content: taskToSave.content,
+        status: taskToSave.status,
+        createdAt: taskToSave.createdAt,
+        updatedAt: taskToSave.updatedAt
+      };
+      if (!taskToSave.id) {
+        // Create
+        const prismaTask = await prisma.task.create({ data });
+        taskToSave.addPersistentId(prismaTask.id);
+      } else {
+        // Update
+        await prisma.task.update({ where: { id: taskToSave.id }, data });
+      }
     } finally {
       await prisma.$disconnect();
     }
-    return domainTask;
+    return taskToSave;
   }
 
   async findById(id: number): Promise<Task | null> {

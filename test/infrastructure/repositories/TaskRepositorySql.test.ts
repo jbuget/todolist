@@ -66,44 +66,84 @@ describe('infrastructure.repositories.TaskRepositorySql', function () {
   });
 
   describe('#save', () => {
-    it('should insert an instance of Task into the database', async () => {
-      // given
-      const prisma = getPrismaClient();
-      const prismaTasksBefore = await prisma.task.count();
+    describe('[create]', function () {
+      it('should insert an instance of Task into the database', async () => {
+        // given
+        const prisma = getPrismaClient();
+        const prismaTasksBefore = await prisma.task.count();
 
-      const taskRepository = new TaskRepositorySql(prisma);
-      const taskToInsert: Task = new Task({ id: undefined, content: 'New task', createdAt: new Date(Date.now()) });
+        const taskRepository = new TaskRepositorySql(prisma);
+        const taskToInsert: Task = new Task({ id: undefined, content: 'New task', createdAt: new Date(Date.now()) });
 
-      // when
-      await taskRepository.save(taskToInsert);
+        // when
+        await taskRepository.save(taskToInsert);
 
-      // then
-      const prismaTasksAfter = await prisma.task.count();
-      expect(prismaTasksAfter).toBe(prismaTasksBefore + 1);
-    });
-
-    it('should return the instance of Task inserted and persisted', async () => {
-      // given
-      const prisma = getPrismaClient();
-      const taskRepository = new TaskRepositorySql(prisma);
-      const now = new Date(Date.now());
-      const taskToInsert: Task = new Task({
-        id: undefined,
-        content: 'New task',
-        status: Status.DONE,
-        createdAt: now,
-        updatedAt: now
+        // then
+        const prismaTasksAfter = await prisma.task.count();
+        expect(prismaTasksAfter).toBe(prismaTasksBefore + 1);
       });
 
-      // when
-      const savedTask: Task = await taskRepository.save(taskToInsert);
+      it('should return the instance of Task inserted and persisted', async () => {
+        // given
+        const prisma = getPrismaClient();
+        const taskRepository = new TaskRepositorySql(prisma);
+        const now = new Date(Date.now());
+        const taskToInsert: Task = new Task({
+          id: undefined,
+          content: 'New task',
+          status: Status.TO_DO,
+          createdAt: now,
+          updatedAt: now
+        });
 
-      // then
-      expect(savedTask).toBeInstanceOf(Task);
-      expect(savedTask.id).toBeDefined();
-      expect(savedTask.status).toStrictEqual(Status.DONE);
-      expect(savedTask.createdAt).toStrictEqual(now);
-      expect(savedTask.updatedAt).toStrictEqual(now);
+        // when
+        const savedTask: Task = await taskRepository.save(taskToInsert);
+
+        // then
+        expect(savedTask).toBeInstanceOf(Task);
+        expect(savedTask.id).toBeDefined();
+        expect(savedTask.status).toStrictEqual(Status.TO_DO);
+        expect(savedTask.createdAt).toStrictEqual(now);
+        expect(savedTask.updatedAt).toStrictEqual(now);
+      });
+    });
+
+    describe('[update]', function () {
+      it('should persist the modified task', async () => {
+        // given
+        const prisma = getPrismaClient();
+
+        const taskId = 1234;
+        const creationDate = new Date('2021-11-09T17:08:02.865Z');
+
+        await prisma.task.create({
+          data: {
+            id: taskId,
+            content: 'Initial content',
+            status: Status.TO_DO,
+            createdAt: creationDate,
+            updatedAt: creationDate
+          }
+        });
+
+        const taskRepository = new TaskRepositorySql(prisma);
+        const now = new Date(Date.now());
+        // @ts-ignore
+        const taskToUpdate: Task = await taskRepository.findById(taskId);
+        taskToUpdate.content = 'New content';
+        taskToUpdate.status = Status.DONE;
+        taskToUpdate.updatedAt = now;
+
+        // when
+        const updatedTask: Task = await taskRepository.save(taskToUpdate);
+
+        // then
+        expect(updatedTask).toBeInstanceOf(Task);
+        expect(updatedTask.id).toEqual(taskId);
+        expect(updatedTask.status).toStrictEqual(Status.DONE);
+        expect(updatedTask.createdAt).toStrictEqual(creationDate);
+        expect(updatedTask.updatedAt).toStrictEqual(now);
+      });
     });
   });
 
