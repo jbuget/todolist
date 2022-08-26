@@ -58,6 +58,7 @@
     "@prisma/client": "^4.2.1",
     "awilix": "^7.0.3",
     "fastify": "^4.5.2",
+    "fastify-metrics": "^9.2.1",
     "pino": "^8.4.2",
     "pino-pretty": "^9.0.1"
   }

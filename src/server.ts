@@ -1,4 +1,5 @@
 import fastify, { FastifyInstance } from 'fastify';
+import fastifyMetrics from 'fastify-metrics';
 import { listTasks } from './domain/usecases/queries/list_tasks';
 import { createTask } from './domain/usecases/commands/create_task';
 import { TaskRepository } from './domain/entities/TaskRepository';
@@ -11,9 +12,9 @@ import { updateTask } from './domain/usecases/commands/update_task';
 
 function build(): FastifyInstance {
   const logger = container.resolve('logger');
-  const server = fastify({
-    logger
-  });
+  const server = fastify({ logger });
+
+  server.register(fastifyMetrics);
 
   server.get('/ping', async function () {
     return 'pong\n';
